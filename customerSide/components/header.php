@@ -52,7 +52,7 @@ session_start();
             <div class="nav-bar">
                 <div class="brand">
                     <a class="nav-link" href="../home/home.php#hero">
-                        <h1 class="text-center" style="font-family:Copperplate; color:whitesmoke;"> JOHNNY'S</h1><span
+                        <h1 class="text-center" style="font-family:Copperplate; color:whitesmoke;"> Dine-Ease</h1><span
                             class="sr-only"></span>
                     </a>
                 </div>

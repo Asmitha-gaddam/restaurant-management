@@ -38,7 +38,7 @@ if(isset($_SESSION['logged_account_id'])) {
     <p>&nbsp;&nbsp;&nbsp;</p> 
     <section id="signup">
     <div class="container my-6 ">
-    <a class="nav-link" href="../../customerSide/home/home.php"> <h1 class="text-center" style="font-family:Copperplate; color:white;"> JOHNNY'S</h1><span class="sr-only"></span></a>
+    <a class="nav-link" href="../../customerSide/home/home.php"> <h1 class="text-center" style="font-family:Copperplate; color:white;"> DineEase</h1><span class="sr-only"></span></a>
 
     
     <div class="wrapper">

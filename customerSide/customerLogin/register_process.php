@@ -5,7 +5,7 @@ session_start(); // Ensure session is started
 require_once '../config.php';
 
             //success login pattern
-            $message = "Register successful.<br>Welcome to Johnny's Bar & Dining.<br>Please Login with your Account.";
+            $message = "Register successful.<br>Welcome to DineEase.<br>Please Login with your Account.";
             $iconClass = "fa-check-circle";
             $cardClass = "alert-success";
             $bgColor = "#D4F4DD";

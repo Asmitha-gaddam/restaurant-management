@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="wrapper">
-    <h1>Johnny's Dining & Bar</h1>
+    <h1>DineEase</h1>
     <h3>Assign Staff to an Account</h3>
     <p>Please choose an Account to Assign for the Staff Properly</p>
     

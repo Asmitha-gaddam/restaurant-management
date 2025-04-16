@@ -206,7 +206,7 @@ if ($stmt_accounts = mysqli_prepare($link, $sql_accounts)) {
 <body>
     <div class="register-container">
     <div class="register_wrapper"> <!-- Updated class name -->
-        <a class="nav-link" href="../home/home.php#hero"> <h1 class="text-center" style="font-family:Copperplate; color:white;"> JOHNNY'S</h1><span class="sr-only"></span></a><br>
+        <a class="nav-link" href="../home/home.php#hero"> <h1 class="text-center" style="font-family:Copperplate; color:white;"> DineEase</h1><span class="sr-only"></span></a><br>
        
         <form action="register.php" method="post">
             <div class="form-group">

@@ -48,7 +48,7 @@ session_start();
             $message = "Reservation successful";
             $reservation_id = $_GET['reservation_id'] ?? null;
             echo '<a class="nav-link" href="../home/home.php#hero">' .
-            '<h1 class="text-center" style="font-family: Copperplate; color: whitesmoke;">JOHNNY\'S</h1>' .
+            '<h1 class="text-center" style="font-family: Copperplate; color: whitesmoke;">DineEase</h1>' .
             '<span class="sr-only"></span></a>';
             echo '<script>alert("Table Successfully Reserved. Click OK to view your reservation receipt."); window.location.href = "reservationReceipt.php?reservation_id=' . $reservation_id . '";</script>';
 
@@ -58,7 +58,7 @@ session_start();
     <div class="member-info"></div>
     <div class="reserve-container">
         <a class="nav-link" href="../home/home.php#hero">
-            <h1 class="text-center" style="font-family: Copperplate; color: whitesmoke;">JOHNNY'S</h1>
+            <h1 class="text-center" style="font-family: Copperplate; color: whitesmoke;">DineEase</h1>
             <span class="sr-only"></span>
         </a>
 

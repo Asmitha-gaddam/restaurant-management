@@ -95,7 +95,7 @@ $stmt->bind_param("ssssss", $email, $register_date, $phone_number, $password, $m
 </head>
 
 <div class="wrapper">
-    <h1>Johnny's Dining & Bar</h1>
+    <h1>DineEase</h1>
     <h3>Create New Member Account</h3>
     <p>Please fill in Account Information Properly</p>
 
@@ -103,7 +103,7 @@ $stmt->bind_param("ssssss", $email, $register_date, $phone_number, $password, $m
         <div class="form-group">
             <label for="email" class="form-label">Email :</label>
             <input type="text" name="email" class="form-control <?php echo !$email_Err ?:
-                'is-invalid'; ?>" id="email" required email="email" placeholder="johnny@dining.bar.com" value="<?php echo $email; ?>"><br>
+                'is-invalid'; ?>" id="email" required email="email" placeholder="DineEase@dining.com" value="<?php echo $email; ?>"><br>
             <div id="validationServerFeedback" class="invalid-feedback">
             Please provide a valid email.
             </div>

@@ -23,7 +23,7 @@ $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 16);
 
 // Header
-$pdf->Cell(0, 10, "Johnny's Restaurant", 0, 1, 'C');
+$pdf->Cell(0, 10, "DineEase Restaurant", 0, 1, 'C');
 $pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, 'Receipt ID: ' . $bill_data['bill_id'], 0, 1, 'L');
 $pdf->Cell(0, 10, 'Date: ' . $bill_data['bill_time'], 0, 1, 'L');

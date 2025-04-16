@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($staff_result->num_rows === 1) {
             $staff_row = $staff_result->fetch_assoc();
             $logged_staff_name = $staff_row['staff_name']; // Get staff_name
-            //$message = "Login successful.<br> Welcome to Johnny's Staff Panel.";
+            //$message = "Login successful.<br> Welcome to  Staff Panel.";
             //$iconClass = "fa-check-circle";
             //$cardClass = "alert-success";
             //$bgColor = "#D4F4DD";
