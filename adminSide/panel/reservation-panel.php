@@ -12,7 +12,7 @@ require_once '../posBackend/checkIfLoggedIn.php';
             <div class="m-50">
                 <div class="mt-5 mb-3">
                     <h2 class="pull-left">Reservation Details</h2>
-                    <a href="../reservationsCrud/createReservation.php" class="btn btn-outline-dark"><i class="fa fa-plus"></i> Add Reservation</a>
+                    <a href="../reservationsCrud/reservePage.php" class="btn btn-outline-dark"><i class="fa fa-plus"></i> Add Reservation</a>
                 </div>
                 <div class="mb-3">
                     <form method="POST" action="#">
@@ -60,7 +60,8 @@ require_once '../posBackend/checkIfLoggedIn.php';
                         echo "<th>Reservation Time</th>";
                         echo "<th>Reservation Date</th>";
                         echo "<th>Head Count</th>";
-                        echo "<th>Special Request</th>";
+                        // Added new header for Menu Items Ordered
+                        echo "<th>Menu Items</th>";
                         echo "<th>Delete</th>";
                         echo "<th>Receipt</th>";
                         echo "</tr>";
@@ -74,13 +75,30 @@ require_once '../posBackend/checkIfLoggedIn.php';
                             echo "<td>" . $row['reservation_time'] . "</td>";
                             echo "<td>" . $row['reservation_date'] . "</td>";
                             echo "<td>" . $row['head_count'] . "</td>";
-                            echo "<td>" . $row['special_request'] . "</td>";
+                            // Added new column: Display pre-ordered menu items if available
+                            echo "<td>";
+                            if (!empty($row['pre_ordered_items'])) {
+                                $preorder = json_decode($row['pre_ordered_items'], true);
+                                if (is_array($preorder)) {
+                                    $items = [];
+                                    foreach ($preorder as $item) {
+                                        $items[] = $item['item_name'] . " (x" . $item['quantity'] . ")";
+                                    }
+                                    echo implode(", ", $items);
+                                } else {
+                                    echo $row['pre_ordered_items'];
+                                }
+                            } else {
+                                echo "-";
+                            }
+                            echo "</td>";
                             echo "<td>";
                             echo '<a href="../reservationsCrud/deleteReservationVerify.php?id='. $row['reservation_id'] .'" title="Delete Record" data-toggle="tooltip" '
                                    . 'onclick="return confirm(\'Admin permission Required!\n\nAre you sure you want to delete this Reservation?\n\nThis will alter other modules related to this Reservation!\n\')"><span class="fa fa-trash text-black"></span></a>';
                             echo "</td>";
                             echo "<td>";
-                            echo '<a href="../reservationsCrud/reservationReceipt.php?reservation_id='. $row['reservation_id'] .'" title="Receipt" data-toggle="tooltip"><span class="fa fa-receipt text-black"></span></a>';
+                            // Updated receipt URL below:
+                            echo '<a href="http://localhost/restaurant-management/customerSide/customerReservation/reservationReceipt.php?reservation_id='. $row['reservation_id'] .'" title="Receipt" data-toggle="tooltip"><span class="fa fa-receipt text-black"></span></a>';
                             echo "</td>";
                             echo "</tr>";
                         }

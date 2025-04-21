@@ -815,7 +815,7 @@ $sides = mysqli_fetch_all($resultsides, MYSQLI_ASSOC);
         
         // Open the receipt printer page (reservationReceipt.php) after 1000ms
         setTimeout(() => {
-            const printUrl = new URL("http://localhost/restaurant-management/customerSide/CustomerReservation/reservationReceipt.php");
+            const printUrl = new URL("http://localhost/restaurant-management/adminSide/panel/reservation-panel.php");
             printUrl.searchParams.set("customer_name", customerName);
             printUrl.searchParams.set("reservation_date", reservationDate);
             printUrl.searchParams.set("reservation_time", reservationTime);
