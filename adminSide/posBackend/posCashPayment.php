@@ -52,9 +52,9 @@ $reservation_id = $_GET['reservation_id'];
                     echo '<tr>';
                     echo '<td>' . $item_id . '</td>';
                     echo '<td>' . $item_name . '</td>';
-                    echo '<td>RM ' . $item_price . '</td>';
+                    echo '<td>Rs. ' . $item_price . '</td>';
                     echo '<td>' . $quantity . '</td>';
-                    echo '<td>RM ' . number_format($total,2) . '</td>';
+                    echo '<td>Rs. ' . number_format($total,2) . '</td>';
                     echo '</tr>';
                 }
             } else {
@@ -67,10 +67,10 @@ $reservation_id = $_GET['reservation_id'];
                     <hr>
                     <div class="text-right">
                         <?php 
-                        echo "<strong>Total:</strong> RM " . number_format($cart_total, 2) . "<br>";
-                        echo "<strong>Tax (10%):</strong> RM " . number_format($cart_total * $tax, 2) . "<br>";
+                        echo "<strong>Total:</strong> Rs. " . number_format($cart_total, 2) . "<br>";
+                        echo "<strong>Tax (10%):</strong> Rs. " . number_format($cart_total * $tax, 2) . "<br>";
                         $GRANDTOTAL = $tax * $cart_total + $cart_total;
-                        echo "<strong>Grand Total:</strong> RM " . number_format($GRANDTOTAL, 2);
+                        echo "<strong>Grand Total:</strong> Rs. " . number_format($GRANDTOTAL, 2);
                         ?>
                     </div>
 

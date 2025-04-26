@@ -15,28 +15,25 @@ if (isset($_GET['process_reservation'])) {
     $results_capacity = mysqli_query($link, $select_query_capacity);
     if ($results_capacity && $row = mysqli_fetch_assoc($results_capacity)) {
         $head_count = $row['capacity'];
-        // Build reservation_id using smaller substrings:
-        $time_digits = preg_replace('/\D/', '', $reservation_time);
-        $date_digits = preg_replace('/\D/', '', $reservation_date);
-        // Extract last 2 digits from time and last 4 digits from date
-        $time_part = substr($time_digits, -2);
-        $date_part = substr($date_digits, -4);
-        $reservation_id = intval($time_part . $date_part . $table_id);
-        
-        // Convert time and date into proper MySQL formats (e.g. "17:00:00" and "2025-04-17")
+        // Convert time and date into proper MySQL formats
         $reservation_time_db = date("H:i:s", strtotime($reservation_time));
         $reservation_date_db = date("Y-m-d", strtotime($reservation_date));
         
-        // Insert into Reservations and update Table_Availability using converted values
-        $insert_query1 = "INSERT INTO Reservations (reservation_id, customer_name, table_id, reservation_time, reservation_date, head_count, pre_ordered_items) 
-                           VALUES ('$reservation_id', '$customer_name', '$table_id', '$reservation_time_db', '$reservation_date_db', '$head_count', '$preordered');";
+        // Insert into Reservations without manual reservation_id (assumes auto-increment)
+        $insert_query1 = "INSERT INTO Reservations (customer_name, table_id, reservation_time, reservation_date, head_count, pre_ordered_items) 
+                           VALUES ('$customer_name', '$table_id', '$reservation_time_db', '$reservation_date_db', '$head_count', '$preordered');";
+        mysqli_query($link, $insert_query1);
+        // Ensure the returned id is cast to an integer and log it for debugging
+        $reservation_id = (int) mysqli_insert_id($link);
+        error_log("Reservation ID generated: " . $reservation_id);
+        
+        // Insert into Table_Availability using the generated reservation_id
         $insert_query2 = "INSERT INTO Table_Availability (availability_id, table_id, reservation_date, reservation_time, status) 
                            VALUES ('$reservation_id', '$table_id', '$reservation_date_db', '$reservation_time_db', 'no');";
-        mysqli_query($link, $insert_query1);
         mysqli_query($link, $insert_query2);
         
         $_SESSION['customer_name'] = $customer_name;
-        $_SESSION['reservation_id'] = $reservation_id;  // <-- Added session variable for reservation id
+        $_SESSION['reservation_id'] = $reservation_id;
         header("Location: reservePage.php?reservation=success&reservation_id=$reservation_id");
         exit;
     }
@@ -801,7 +798,7 @@ $sides = mysqli_fetch_all($resultsides, MYSQLI_ASSOC);
                 }
             });
         }
-        const url = new URL("http://localhost/restaurant-management/customerSide/home/home.php");
+        const url = new URL("http://localhost/restaurant-management/customerSide/CustomerReservation/reservePage.php");
         url.searchParams.set("process_reservation", "1");
         url.searchParams.set("customer_name", customerName);
         url.searchParams.set("head_count", guestCount);

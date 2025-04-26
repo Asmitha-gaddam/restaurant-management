@@ -61,7 +61,7 @@ $totalRevenueThisMonth = $totalRevenueThisMonthRow['total_revenue'];
                     <thead>
                         <tr>
                             <th scope="col">Metric</th>
-                            <th scope="col">Amount (RM)</th>
+                            <th scope="col">Amount (Rs)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,6 @@ $totalRevenueThisMonth = $totalRevenueThisMonthRow['total_revenue'];
                         </tr>
                     </tbody>
                 </table>
-                <a href="../report/generate_report.php" style="width: 10em;" class="btn btn-dark">Print Report</a>
                 <div class="container pt-5 pl-600 row">
                     <div class="container pt-5 pl-600 ">
                         <!-- Bar Chart Payment Method -->

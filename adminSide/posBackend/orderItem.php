@@ -181,9 +181,9 @@ function createNewBillRecord($table_id) {
                                         echo '<tr>';
                                         echo '<td>' . $item_id . '</td>';
                                         echo '<td>' . $item_name . '</td>';
-                                        echo '<td>RM ' . number_format($item_price,2) . '</td>';
+                                        echo '<td>Rs. ' . number_format($item_price,2) . '</td>';
                                         echo '<td>' . $quantity . '</td>';
-                                        echo '<td>RM ' . number_format($total,2) . '</td>';
+                                        echo '<td>Rs. ' . number_format($total,2) . '</td>';
                                         // Check if the bill has been paid
                                         $payment_time_query = "SELECT payment_time FROM Bills WHERE bill_id = '$bill_id'";
                                         $payment_time_result = mysqli_query($link, $payment_time_query);
@@ -217,15 +217,15 @@ function createNewBillRecord($table_id) {
         <tbody>
             <tr>
                 <td><strong>Cart Total</strong></td>
-                <td>RM <?php echo number_format($cart_total, 2); ?></td>
+                <td>Rs. <?php echo number_format($cart_total, 2); ?></td>
             </tr>
             <tr>
                 <td><strong>Cart Taxed</strong></td>
-                <td>RM <?php echo number_format($cart_total * $tax, 2); ?></td>
+                <td>Rs. <?php echo number_format($cart_total * $tax, 2); ?></td>
             </tr>
             <tr>
                 <td><strong>Grand Total</strong></td>
-                <td>RM <?php echo number_format(($tax * $cart_total) + $cart_total, 2); ?></td>
+                <td>Rs. <?php echo number_format(($tax * $cart_total) + $cart_total, 2); ?></td>
             </tr>
         </tbody>
     </table>
@@ -233,11 +233,7 @@ function createNewBillRecord($table_id) {
 
                         <?php 
                         
-                        //echo "Cart Total: RM " . $cart_total;
-                        //echo "<br>Cart Taxed: RM " . $cart_total * $tax;
-                        //echo "<br>Grand Total: RM " . $tax * $cart_total + $cart_total;
-                      
-                        // Check if the payment time record exists for the bill
+                         // Check if the payment time record exists for the bill
                         $payment_time_query = "SELECT payment_time FROM Bills WHERE bill_id = '$bill_id'";
                         $payment_time_result = mysqli_query($link, $payment_time_query);
                         $has_payment_time = false;

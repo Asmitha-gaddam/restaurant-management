@@ -28,34 +28,60 @@ require_once '../config.php'; // Include your database configuration
                     $table = array("", "", "");
                     if ($result) {
                         $table_count = 0;
-                    // ...
+                    
                     while ($row = mysqli_fetch_assoc($result)) {
                         if ($table_count % 5 == 0) {
                             echo '</div><div class="row justify-content-center">';
                         }
                         $table_id = $row['table_id'];
                         $capacity = $row['capacity'];
-                        
 
                         $sqlBill = "SELECT bill_id FROM Bills WHERE table_id = $table_id ORDER BY bill_time DESC LIMIT 1";
                         $result1 = $link->query($sqlBill);
                         $latestBillData = $result1->fetch_assoc();
-                        
-                         // Check if the table is reserved for the selected time
+
                         date_default_timezone_set('Asia/Singapore'); // Set the time zone to Singapore
+                        $selectedDate = date("Y-m-d"); // Get the current date
+                        $endTime = date("H:i:s"); // Get the current time
+                        $startTime = date("H:i:s", strtotime($endTime) - (20 * 60)); // Calculate the start time of the 20-minute range
 
-                        $selectedDate = date("Y-m-d"); // Get the current date, you can change this to your selected date
-                        $endTime = date("H:i:s"); // Get the current time, you can change this to your selected time
-
-                        // Calculate the end time of the 20-minute range
-                        $startTime = date("H:i:s", strtotime($endTime) - (20 * 60));
-                        // Check if there's a reservation within the 20-minute range
                         $reservationQuery = "SELECT * FROM reservations WHERE table_id = $table_id AND reservation_date = '$selectedDate' AND reservation_time BETWEEN '$startTime' AND '$endTime'";
                         $reservationResult = mysqli_query($link, $reservationQuery);
-                        
-                        //Show all reservations
-                        
-                        //
+
+                        if ($reservationResult && mysqli_num_rows($reservationResult) > 0) {
+                            // Update table status to reserved (2)
+                            $updateQuery = "UPDATE restaurant_tables SET is_available = 2 WHERE table_id = $table_id";
+                            mysqli_query($link, $updateQuery);
+                        } elseif ($latestBillData) {
+                            $latestBillID = $latestBillData['bill_id'];
+                            $sqlBillItems = "SELECT * FROM bill_items WHERE bill_id = $latestBillID";
+                            $result2 = $link->query($sqlBillItems);
+
+                            $paymentTimeQuery = "SELECT payment_time FROM Bills WHERE bill_id = $latestBillID";
+                            $paymentTimeResult = $link->query($paymentTimeQuery);
+                            $hasPaymentTime = false;
+
+                            if ($paymentTimeResult && $paymentTimeResult->num_rows > 0) {
+                                $paymentTimeRow = $paymentTimeResult->fetch_assoc();
+                                if (!empty($paymentTimeRow['payment_time'])) {
+                                    $hasPaymentTime = true;
+                                }
+                            }
+
+                            if (!$hasPaymentTime && $result2 && mysqli_num_rows($result2) > 0) {
+                                // Update table status to occupied (0)
+                                $updateQuery = "UPDATE restaurant_tables SET is_available = 0 WHERE table_id = $table_id";
+                                mysqli_query($link, $updateQuery);
+                            } else {
+                                // Update table status to available (1)
+                                $updateQuery = "UPDATE restaurant_tables SET is_available = 1 WHERE table_id = $table_id";
+                                mysqli_query($link, $updateQuery);
+                            }
+                        } else {
+                            // Update table status to available (1)
+                            $updateQuery = "UPDATE restaurant_tables SET is_available = 1 WHERE table_id = $table_id";
+                            mysqli_query($link, $updateQuery);
+                        }
 
                         if ($latestBillData) {
                             $latestBillID = $latestBillData['bill_id'];
@@ -99,7 +125,7 @@ require_once '../config.php'; // Include your database configuration
                         echo '</a></div>';
                         $table_count++;
                     }
-                    // ...
+                    
                     } else {
                         echo "Error fetching tables: " . mysqli_error($link);
                     }

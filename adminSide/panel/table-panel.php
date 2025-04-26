@@ -34,29 +34,41 @@ require_once '../posBackend/checkIfLoggedIn.php';
                     require_once "../config.php";
                     
                     if (isset($_POST['search'])) {
-                    if (!empty($_POST['search'])) {
-                        $search = $_POST['search'];
-
-                        $sql = "SELECT *
-                                FROM Restaurant_Tables
-                                WHERE table_id LIKE '%$search%' OR capacity LIKE '%$search%' 
-                                ORDER BY table_id;";
+                        if (!empty($_POST['search'])) {
+                            $search = $_POST['search'];
+                            $sql = "SELECT table_id, capacity, 
+                                           CASE 
+                                               WHEN is_available = 0 THEN 'Occupied'
+                                               WHEN is_available = 1 THEN 'Available'
+                                               WHEN is_available = 2 THEN 'Reserved'
+                                               ELSE 'Unknown'
+                                           END AS pos_status
+                                    FROM restaurant_tables
+                                    WHERE table_id LIKE '%$search%' OR capacity LIKE '%$search%'
+                                    ORDER BY table_id;";
+                        } else {
+                            $sql = "SELECT table_id, capacity, 
+                                           CASE 
+                                               WHEN is_available = 0 THEN 'Occupied'
+                                               WHEN is_available = 1 THEN 'Available'
+                                               WHEN is_available = 2 THEN 'Reserved'
+                                               ELSE 'Unknown'
+                                           END AS pos_status
+                                    FROM restaurant_tables
+                                    ORDER BY table_id;";
+                        }
                     } else {
-                        // Default query to fetch all Restaurant_tables
-                        $sql = "SELECT *
-                                FROM Restaurant_Tables
+                        $sql = "SELECT table_id, capacity, 
+                                       CASE 
+                                           WHEN is_available = 0 THEN 'Occupied'
+                                           WHEN is_available = 1 THEN 'Available'
+                                           WHEN is_available = 2 THEN 'Reserved'
+                                           ELSE 'Unknown'
+                                       END AS pos_status
+                                FROM restaurant_tables
                                 ORDER BY table_id;";
                     }
-                } else {
-                    // Default query to fetch all Restaurant_tables
-                    $sql = "SELECT *
-                            FROM Restaurant_Tables
-                            ORDER BY table_id;";
-                }
 
-
-                    // Attempt select query execution
-                    //$sql = "SELECT * FROM Restaurant_Tables ORDER BY table_id;";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo '<table class="table table-bordered table-striped">';
@@ -64,8 +76,7 @@ require_once '../posBackend/checkIfLoggedIn.php';
                                     echo "<tr>";
                                         echo "<th>Table ID</th>";
                                         echo "<th>Capacity</th>";
-                                        echo "<th>Availability</th>";
-                                        //echo "<th>Delete</th>";
+                                        echo "<th>Status</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
@@ -73,22 +84,11 @@ require_once '../posBackend/checkIfLoggedIn.php';
                                     echo "<tr>";
                                         echo "<td>" . $row['table_id'] . "</td>";
                                         echo "<td>" . $row['capacity'] . " Persons </td>";
-                                        if ($row['is_available'] == true) {
-                                            echo "<td>" . "Yes" . "</td>";
-                                        } else {
-                                            echo "<td>" . "No" . "</td>";
-                                        }
-                                      
-                                     //   echo "<td>";
-                                      //  $deleteSQL = "DELETE FROM Reservations WHERE reservation_id = '" . $row['table_id'] . "';";
-                                        //   echo '<a href="../tableCrud/deleteTableVerify.php?id='. $row['table_id'] .'" title="Delete Record" data-toggle="tooltip" '
-                                         //           . 'onclick="return confirm(\'Admin Permissions Required!\n\nAre you sure you want to delete this Table?\n\nThis will alter other modules related to this Table!\')"><span class="fa fa-trash text-black"></span></a>';
-                                       // echo "</td>";
+                                        echo "<td>" . $row['pos_status'] . "</td>";
                                     echo "</tr>";
                                 }
                                 echo "</tbody>";                            
                             echo "</table>";
-                            // Free result set
                             mysqli_free_result($result);
                         } else{
                             echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
@@ -96,8 +96,6 @@ require_once '../posBackend/checkIfLoggedIn.php';
                     } else{
                         echo "Oops! Something went wrong. Please try again later.";
                     }
- 
-                    // Close connection
                     mysqli_close($link);
                     ?>
                 </div>
