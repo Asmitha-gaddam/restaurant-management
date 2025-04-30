@@ -81,11 +81,11 @@ if (strpos($current_url, "../../home/home.php") !== false) {
                                 <li><a href="../../adminSide/StaffLogin/login.php" data-after="Staff">Staff</a></li>
 <?php
 }
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) { 
+    // Insert feedback option for logged in users only
+    echo '<li><a href="../CustomerReservation/feedback.php" data-after="Feedback">Feedback</a></li>';
+}
 ?>
-
-
-
-
                                 <div class="dropdown">
                                     <button class="dropbtn">ACCOUNT <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </button>
