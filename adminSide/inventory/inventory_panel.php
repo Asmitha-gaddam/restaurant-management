@@ -17,90 +17,106 @@ $result = mysqli_query($link, $query);
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-        
-        body {
-            background-color: #121212;
-            color: #f0f0f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+body {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .wrapper {
-            width: 1300px; padding-left: 200px; padding-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+.wrapper {
+    width: 100%;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
 
-        .container-fluid {
-            max-width: 1200px;
-            background-color: #1e1e1e;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
-        }
+.container-fluid {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #000000;
+}
 
-        h2 {
-            color: #ff8c00;
-            margin-bottom: 20px;
-        }
+h2 {
+    color: #000000;
+    margin-bottom: 20px;
+}
 
-        .btn-outline-dark {
-            border: 1px solid #ff8c00;
-            color: #ff8c00;
-            transition: all 0.3s ease-in-out;
-        }
+.btn-outline-dark {
+    border: 1px solid #000000;
+    color: #000000;
+    transition: all 0.3s ease-in-out;
+}
 
-        .btn-outline-dark:hover {
-            background-color: #ff8c00;
-            color: #121212;
-        }
+.btn-outline-dark:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
 
-        .table {
-            margin-top: 20px;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+.table {
+    margin-top: 20px;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
-        .table th {
-            background-color: #ff8c00;
-            color: #121212;
-            text-align: center;
-        }
+.table th {
+    background-color: #f2f2f2;
+    color: #000000;
+    text-align: center;
+    border-bottom: 1px solid #000000;
+}
 
-        .table td {
-            text-align: center;
-            vertical-align: middle;
-        }
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    color: #000000;
+    border-top: 1px solid #000000;
+}
 
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #2c2c2c;
-        }
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
 
-        .fa-pencil,
-        .fa-trash {
-            margin: 0 10px;
-            font-size: 18px;
-            transition: color 0.2s;
-        }
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #ffffff;
+}
 
-        .fa-pencil:hover {
-            color: #ffa500;
-        }
+.table tr {
+    color: #000000;
+}
 
-        .fa-trash:hover {
-            color: #e74c3c;
-        }
+.fa-pencil,
+.fa-trash {
+    margin: 0 10px;
+    font-size: 18px;
+    transition: color 0.2s;
+    color: #000000;
+}
 
-        .alert-danger {
-            background-color: #ffdddd;
-            color: #a94442;
-            border: 1px solid #ebccd1;
-            padding: 15px;
-            border-radius: 6px;
-        }
+.fa-pencil:hover {
+    color: #555555;
+}
+
+.fa-trash:hover {
+    color: #cc0000;
+}
+
+.alert-danger {
+    background-color: #ffdddd;
+    color: #a94442;
+    border: 1px solid #a94442;
+    padding: 15px;
+    border-radius: 6px;
+}
+
     </style>
 </head>
 <body>

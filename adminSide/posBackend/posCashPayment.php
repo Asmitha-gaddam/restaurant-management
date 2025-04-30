@@ -131,7 +131,7 @@ $reservation_id = $_GET['reservation_id'];
 
             if ($payment_amount >= $GRANDTOTAL) {
                 echo '<div class="alert alert-dark" role="alert">';
-                echo "Change is RM" . number_format(calculateChange($payment_amount, $GRANDTOTAL),2);
+                echo "Change is Rs." . number_format(calculateChange($payment_amount, $GRANDTOTAL),2);
                 echo '</div>';
 
                 // Update the payment method, bill time, and other details in the Bills table

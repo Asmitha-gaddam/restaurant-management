@@ -52,8 +52,7 @@ session_start();
             <div class="nav-bar">
                 <div class="brand">
                     <a class="nav-link" href="../home/home.php#hero">
-                        <h1 class="text-center" style="font-family:Copperplate; color:whitesmoke;"> Dine-Ease</h1><span
-                            class="sr-only"></span>
+                        <img src="../image/logo.png" alt="Logo" style="width:150px; height:auto;">
                     </a>
                 </div>
                 <div class="nav-list">

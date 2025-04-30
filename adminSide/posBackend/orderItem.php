@@ -21,7 +21,32 @@ function createNewBillRecord($table_id) {
     }
 }
 
-
+// Process submitted reservation id to load pre-ordered items into the cart
+if (isset($_POST['reservation_id']) && !empty($_POST['reservation_id'])) {
+    $reservation_id = $_POST['reservation_id'];
+    $resQuery = "SELECT pre_ordered_items FROM Reservations WHERE reservation_id = '$reservation_id'";
+    $resResult = mysqli_query($link, $resQuery);
+    if ($resResult && mysqli_num_rows($resResult) > 0) {
+        $resRow = mysqli_fetch_assoc($resResult);
+        $preordered = json_decode($resRow['pre_ordered_items'], true);
+        if (is_array($preordered)) {
+            foreach ($preordered as $item) {
+                $item_name  = $item['item_name'];
+                $quantity   = $item['quantity'];
+                $item_price = $item['item_price'];
+                // Look up the item_id in Menu using item name and price
+                $menuQuery = "SELECT item_id FROM Menu WHERE item_name = '$item_name' AND item_price = '$item_price' LIMIT 1";
+                $menuResult = mysqli_query($link, $menuQuery);
+                if ($menuResult && mysqli_num_rows($menuResult) > 0) {
+                    $menuRow = mysqli_fetch_assoc($menuResult);
+                    $item_id = $menuRow['item_id'];
+                    $insertBI = "INSERT INTO bill_items (bill_id, item_id, quantity) VALUES ('$bill_id', '$item_id', '$quantity')";
+                    mysqli_query($link, $insertBI);
+                }
+            }
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,10 +58,21 @@ function createNewBillRecord($table_id) {
         <div class="row">
             <div class="col-md-6 order-md-1 m-1" id="item-select-section ">
                 <div class="container-fluid pt-4 pl-500 row" style=" margin-left: 10rem;width: 81% ;">
-                    <div class="mt-5 mb-2">
-                    <h3 class="pull-left">Food & Drinks</h3>
-                        
+                    
+                    <div class="mt-5 mb-2 d-flex align-items-center justify-content-between">
+                        <h3 class="pull-left">Food & Drinks</h3>
+                        <!-- Updated Reservation ID form: same height for field & button with 2px gap -->
+                        <form method="POST" action="#" class="form-inline" style="margin-top: 10px;">
+                            <div class="d-flex align-items-center">
+                                <label for="reservation-id" class="sr-only">Reservation ID</label>
+                                <input type="text" id="reservation-id" name="reservation_id" class="form-control" placeholder="Enter Reservation ID" style="margin-right:2px; height:34px;">
+                                <input type="hidden" name="bill_id" value="<?php echo $bill_id; ?>">
+                                <input type="hidden" name="table_id" value="<?php echo $table_id; ?>">
+                                <button type="submit" class="btn btn-primary btn-sm" style="height:34px;">Load</button>
+                            </div>
+                        </form>
                     </div>
+                    
                     <div class="mb-3">
                         <form method="POST" action="#">
                             <div class="row">
@@ -45,9 +81,6 @@ function createNewBillRecord($table_id) {
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-dark">Search</button>
-                                </div>
-                                <div class="col" style="text-align: right;" >
-                                    <a href="orderItem.php?bill_id=<?php echo $bill_id; ?>&table_id=<?php echo $table_id; ?>" class="btn btn-light">Show All</a>
                                 </div>
                             </div>
                         </form>

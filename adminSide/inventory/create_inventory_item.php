@@ -53,58 +53,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <style>
     body {
-        background-color: #121212;
-        color: #f0f0f0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .form-wrapper {
-    
-            width: 1300px; padding-left: 200px; padding-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        
-    }
-    .form-container {
-        background-color: #1e1e1e;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 0 15px rgba(255, 165, 0, 0.3);
-        width: 100%;
-        max-width: 500px;
-    }
-    h2 {
-        color: #ffa500;
-    }
-    .form-control {
-        background-color: #2a2a2a;
-        border: 1px solid #444;
-        color: #fff;
-    }
-    .form-control:focus {
-        border-color: #ffa500;
-        box-shadow: 0 0 5px #ffa500;
-    }
-    .btn-primary {
-        background-color: #ffa500;
-        border-color: #ffa500;
-        color: #000;
-    }
-    .btn-primary:hover {
-        background-color: #e69500;
-    }
-    .btn-secondary {
-        background-color: #444;
-        border-color: #444;
-        color: #fff;
-    }
-    .btn-secondary:hover {
-        background-color: #555;
-    }
-    .invalid-feedback {
-        color: #ff6b6b;
-    }
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-wrapper {
+    width: 1300px;
+    padding-left: 200px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+}
+
+h2 {
+    color: #333;
+}
+
+.form-control {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+.form-control:focus {
+    border-color: #000;
+    box-shadow: 0 0 5px #000;
+}
+
+.btn-primary {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+}
+
+.btn-secondary {
+    background-color: #f1f1f1;
+    border-color: #ccc;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #e1e1e1;
+}
+
+.invalid-feedback {
+    color: #ff6b6b;
+}
+
 </style>
 
 <div class="form-wrapper">

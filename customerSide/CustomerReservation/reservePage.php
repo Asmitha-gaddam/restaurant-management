@@ -1,8 +1,14 @@
 <?php
 require_once '../config.php';
 
+if (session_status() === PHP_SESSION_NONE) session_start();
+$loggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+if (!$loggedIn) {
+    echo '<div class="login-overlay">You are not logged in. Redirecting...</div>';
+    echo '<script>setTimeout(function(){ window.location.href = "http://localhost/restaurant-management/customerSide/customerLogin/login.php"; }, 3000);</script>';
+}
+
 if (isset($_GET['process_reservation'])) {
-    session_start();
     // Retrieve reservation details from GET parameters
     $customer_name    = $_GET['customer_name']    ?? '';
     $reservation_time = $_GET['reservation_time'] ?? '';
@@ -244,6 +250,22 @@ $sides = mysqli_fetch_all($resultsides, MYSQLI_ASSOC);
     #reservationOverlay h1 {
       color: #fff;
       font-size: 32px;
+    }
+
+    /* Added CSS for login overlay */
+    .login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
     }
   </style>
 </head>
