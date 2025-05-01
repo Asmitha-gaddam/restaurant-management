@@ -26,6 +26,46 @@
         <option value="green">DRINKS</option>
       </select>
         
+    <!-- Updated CSS to collapse nutrient content completely when not hovered -->
+    <style>
+        .item-name {
+            position: relative;
+            display: inline-block;
+            text-align: left;
+        }
+        .item-nutrients {
+            position: absolute; /* Remove it from the document flow */
+            left: 0;
+            top: 100%; /* Position it directly below the item name */
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            color: #333;
+            font-size: 0.9em;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .item-name:hover .item-nutrients {
+            opacity: 1;
+            max-height: 200px; /* Adjust to fit the content */
+        }
+        .item-name::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: black;
+            transition: width 0.3s ease;
+            margin-top: 5px;
+        }
+        .item-name:hover::after {
+            width: 100%;
+        }
+    </style>
+
     <div class="yellow msg"> 
      
         <div></div>
@@ -33,8 +73,18 @@
            <h1 style="text-align:center;">MAIN DISHES</h1>
           <?php foreach ($mainDishes as $item): ?>
       <p>
-        <span class="item-name"> <strong><?php echo $item['item_name']; ?></strong></span>
-        <span class="item-price">Rs.<?php echo $item['item_price']; ?></span><br>
+        <span class="item-name"> 
+          <strong><?php echo $item['item_name']; ?></strong>
+          <?php if (isset($item['avg_rating'])): ?>
+          <span class="item-rating"><?php echo $item['avg_rating']; ?> ⭐</span>
+          <?php endif; ?>
+          <span class="item-price">Rs.<?php echo $item['item_price']; ?></span>
+          <?php if (isset($item['calories'])): ?>
+          <span class="item-nutrients">
+            Nutrients: Calories: <?php echo $item['calories']; ?> kcal | Protein: <?php echo $item['protein_g']; ?>g | Fat: <?php echo $item['fat_g']; ?>g | Carbs: <?php echo $item['carbs_g']; ?>g
+          </span>
+          <?php endif; ?>
+        </span>
         <span class="item_type"><i><?php echo $item['item_type']; ?></i></span>
         <hr>
         
@@ -50,8 +100,18 @@
            <h1 style="text-align:center">SIDE DISHES</h1>
           <?php foreach ($sides as $item): ?>
       <p>
-        <span class="item-name"> <strong><?php echo $item['item_name']; ?></strong></span>
-        <span class="item-price">Rs.<?php echo $item['item_price']; ?></span><br>
+        <span class="item-name"> 
+          <strong><?php echo $item['item_name']; ?></strong>
+          <?php if (isset($item['avg_rating'])): ?>
+          <span class="item-rating"><?php echo $item['avg_rating']; ?> ⭐</span>
+          <?php endif; ?>
+          <span class="item-price">Rs.<?php echo $item['item_price']; ?></span>
+          <?php if (isset($item['calories'])): ?>
+          <span class="item-nutrients">
+            Nutrients: Calories: <?php echo $item['calories']; ?> kcal | Protein: <?php echo $item['protein_g']; ?>g | Fat: <?php echo $item['fat_g']; ?>g | Carbs: <?php echo $item['carbs_g']; ?>g
+          </span>
+          <?php endif; ?>
+        </span>
         <span class="item_type"><i><?php echo $item['item_type']; ?></i></span>
         <hr>
       </p>
@@ -67,8 +127,18 @@
            <h1 style="text-align:center">DRINKS</h1>
           <?php foreach ($drinks as $item): ?>
       <p>
-        <span class="item-name"> <strong><?php echo $item['item_name']; ?></strong></span>
-        <span class="item-price">Rs.<?php echo $item['item_price']; ?></span><br>
+        <span class="item-name"> 
+          <strong><?php echo $item['item_name']; ?></strong>
+          <?php if (isset($item['avg_rating'])): ?>
+          <span class="item-rating"><?php echo $item['avg_rating']; ?> ⭐</span>
+          <?php endif; ?>
+          <span class="item-price">Rs.<?php echo $item['item_price']; ?></span>
+          <?php if (isset($item['calories'])): ?>
+          <span class="item-nutrients">
+            Nutrients: Calories: <?php echo $item['calories']; ?> kcal | Protein: <?php echo $item['protein_g']; ?>g | Fat: <?php echo $item['fat_g']; ?>g | Carbs: <?php echo $item['carbs_g']; ?>g
+          </span>
+          <?php endif; ?>
+        </span>
         <span class="item_type"><i><?php echo $item['item_type']; ?></i></span>
         <hr>
       </p>
@@ -83,8 +153,18 @@
            <h1 style="text-align:center">MAIN DISHES</h1>
           <?php foreach ($mainDishes as $item): ?>
       <p>
-        <span class="item-name"> <strong><?php echo $item['item_name']; ?></strong></span>
-        <span class="item-price">Rs.<?php echo $item['item_price']; ?></span><br>
+        <span class="item-name"> 
+          <strong><?php echo $item['item_name']; ?></strong>
+          <?php if (isset($item['avg_rating'])): ?>
+          <span class="item-rating"><?php echo $item['avg_rating']; ?> ⭐</span>
+          <?php endif; ?>
+          <span class="item-price">Rs.<?php echo $item['item_price']; ?></span>
+          <?php if (isset($item['calories'])): ?>
+          <span class="item-nutrients">
+            Nutrients: Calories: <?php echo $item['calories']; ?> kcal | Protein: <?php echo $item['protein_g']; ?>g | Fat: <?php echo $item['fat_g']; ?>g | Carbs: <?php echo $item['carbs_g']; ?>g
+          </span>
+          <?php endif; ?>
+        </span>
         <span class="item_type"><i><?php echo $item['item_type']; ?></i></span>
         <hr>
       </p>
@@ -97,8 +177,18 @@
            <h1 style="text-align:center">SIDE DISHES</h1>
           <?php foreach ($sides as $item): ?>
       <p>
-        <span class="item-name"> <strong><?php echo $item['item_name']; ?></strong></span>
-        <span class="item-price">Rs.<?php echo $item['item_price']; ?></span><br>
+        <span class="item-name"> 
+          <strong><?php echo $item['item_name']; ?></strong>
+          <?php if (isset($item['avg_rating'])): ?>
+          <span class="item-rating"><?php echo $item['avg_rating']; ?> ⭐</span>
+          <?php endif; ?>
+          <span class="item-price">Rs.<?php echo $item['item_price']; ?></span>
+          <?php if (isset($item['calories'])): ?>
+          <span class="item-nutrients">
+            Nutrients: Calories: <?php echo $item['calories']; ?> kcal | Protein: <?php echo $item['protein_g']; ?>g | Fat: <?php echo $item['fat_g']; ?>g | Carbs: <?php echo $item['carbs_g']; ?>g
+          </span>
+          <?php endif; ?>
+        </span>
         <span class="item_type"><i><?php echo $item['item_type']; ?></i></span>
         <hr>
       </p>
@@ -110,8 +200,18 @@
            <h1 style="text-align:center">DRINKS</h1>
           <?php foreach ($drinks as $item): ?>
       <p>
-        <span class="item-name"> <strong><?php echo $item['item_name']; ?></strong></span>
-        <span class="item-price">Rs.<?php echo $item['item_price']; ?></span><br>
+        <span class="item-name"> 
+          <strong><?php echo $item['item_name']; ?></strong>
+          <?php if (isset($item['avg_rating'])): ?>
+          <span class="item-rating"><?php echo $item['avg_rating']; ?> ⭐</span>
+          <?php endif; ?>
+          <span class="item-price">Rs.<?php echo $item['item_price']; ?></span>
+          <?php if (isset($item['calories'])): ?>
+          <span class="item-nutrients">
+            Nutrients: Calories: <?php echo $item['calories']; ?> kcal | Protein: <?php echo $item['protein_g']; ?>g | Fat: <?php echo $item['fat_g']; ?>g | Carbs: <?php echo $item['carbs_g']; ?>g
+          </span>
+          <?php endif; ?>
+        </span>
         <span class="item_type"><i><?php echo $item['item_type']; ?></i></span>
         <hr>
       </p>
@@ -123,6 +223,23 @@
   </section>
   <!-- End menu Section -->
 
+<!-- Updated JS to add/remove the expanded class -->
+<script>
+document.querySelectorAll('.item-name').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+        var nutrients = el.querySelector('.item-nutrients');
+        if (nutrients) {
+            nutrients.classList.add('expanded');
+        }
+    });
+    el.addEventListener('mouseleave', function() {
+        var nutrients = el.querySelector('.item-nutrients');
+        if (nutrients) {
+            nutrients.classList.remove('expanded');
+        }
+    });
+});
+</script>
 
   
   <!-- About Section -->
