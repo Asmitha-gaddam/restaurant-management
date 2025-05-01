@@ -1,7 +1,6 @@
 <?php include_once('../components/header.php')?>
-<!-- Hero Section with Video Background and Text Overlay -->
 <section id="hero" style="position: relative;">
-<img src="../image/homepage.png" alt="Steak on Grill" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+<img src="../image/homepage.png" alt="img" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
     <div class="hero container" style="position: relative; z-index: 1;">
         <div>
             <h1><strong><h1 class="text-center" style="font-family:Copperplate; color:whitesmoke;"> DineEase</h1><span></span></strong></h1>
@@ -9,7 +8,6 @@
         </div>
     </div>
 </section>
-<!-- End Hero Section -->
   
   
   

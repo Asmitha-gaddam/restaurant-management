@@ -15,7 +15,6 @@ session_start(); // Ensure session is started
             <div class="form-group">
                 <?php
                     $currentStaffId = $_SESSION['logged_account_id'] ?? "Please Login"; 
-                    
                 ?>
                 <label for="staffId">Staff ID:</label>
                 <input type="text" id="staffId" name="staffId" class="form-control" 
@@ -23,11 +22,11 @@ session_start(); // Ensure session is started
             </div>
             <div class="form-group">
                 <label for="memberId">Member ID:</label>
-                <input type="text" id="memberId" name="memberId" class="form-control">
+                <input type="text" id="memberId" name="memberId" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="reservationId">Reservation ID:</label>
-                <input type="text" id="reservationId" name="reservationId" class="form-control">
+                <input type="text" id="reservationId" name="reservationId" class="form-control" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-dark">Check Validity</button>
@@ -44,53 +43,48 @@ session_start(); // Ensure session is started
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $staffId = $_POST['staffId'];
-        $memberId = !empty($_POST['memberId']) ? $_POST['memberId'] : 1;
-        $reservationId = !empty($_POST['reservationId']) ? $_POST['reservationId'] : 1111111;
+        $memberId = $_POST['memberId'];
+        $reservationId = $_POST['reservationId'];
         $bill_id = $_GET['bill_id'];
 
         // Check if the staff ID exists in the database
         $query = "SELECT * FROM Staffs WHERE staff_id = '$staffId'";
         $result = mysqli_query($link, $query);
-
         if (!$result) {
-            echo "Error: " . mysqli_error($link);
+             echo "Error: " . mysqli_error($link);
         } else {
-            $staffExists = mysqli_num_rows($result) > 0;
+             $staffExists = mysqli_num_rows($result) > 0;
 
-            $memberExists = true; // Assume member is valid if ID is not provided
-            if (!empty($memberId)) {
-                $query = "SELECT * FROM Memberships WHERE member_id = '$memberId'";
-                $result = mysqli_query($link, $query);
-                if (!$result) {
-                    echo "Error: " . mysqli_error($link);
-                } else {
-                    $memberExists = mysqli_num_rows($result) > 0;
-                }
-            }
+             // Validate member ID with MySQL
+             $query = "SELECT * FROM Memberships WHERE member_id = '$memberId'";
+             $result = mysqli_query($link, $query);
+             if (!$result) {
+                 echo "Error: " . mysqli_error($link);
+             } else {
+                 $memberExists = mysqli_num_rows($result) > 0;
+             }
 
-            $reservationExists = true; // Assume reservation is valid if ID is not provided
-            if (!empty($reservationId)) {
-                $query = "SELECT * FROM Reservations WHERE reservation_id = '$reservationId'";
-                $result = mysqli_query($link, $query);
-                if (!$result) {
-                    echo "Error: " . mysqli_error($link);
-                } else {
-                    $reservationExists = mysqli_num_rows($result) > 0;
-                }
-            }
+             // Validate reservation ID with MySQL
+             $query = "SELECT * FROM Reservations WHERE reservation_id = '$reservationId'";
+             $result = mysqli_query($link, $query);
+             if (!$result) {
+                 echo "Error: " . mysqli_error($link);
+             } else {
+                 $reservationExists = mysqli_num_rows($result) > 0;
+             }
 
-            if ($staffExists && $memberExists && $reservationExists) {
-                echo '<div class="alert alert-success" role="alert">';
-                echo "Staff, member, and reservation are valid.";
-                echo '</div>';
-                echo '<div class="mt-3">';
-                echo '<a href="posCashPayment.php?bill_id=' . $bill_id . '&staff_id=' . $staffId . '&member_id=' . $memberId . '&reservation_id=' . $reservationId . '" class="btn btn-success">Cash</a>';
-                echo '<a href="posCardPayment.php?bill_id=' . $bill_id . '&staff_id=' . $staffId . '&member_id=' . $memberId . '&reservation_id=' . $reservationId . '" class="btn btn-primary ml-2">Credit Card</a>';
-               echo '<a href="posQrPayment.php?bill_id=' . $bill_id . '&staff_id=' . $staffId . '&member_id=' . $memberId . '&reservation_id=' . $reservationId . '" class="btn btn-info ml-2">QR Code</a>';
-                echo '</div>';
-            } else {
-                echo "Invalid staff, member, or reservation.";
-            }
+             if ($staffExists && $memberExists && $reservationExists) {
+                 echo '<div class="alert alert-success" role="alert">';
+                 echo "Staff, member, and reservation are valid.";
+                 echo '</div>';
+                 echo '<div class="mt-3">';
+                 echo '<a href="posCashPayment.php?bill_id=' . $bill_id . '&staff_id=' . $staffId . '&member_id=' . $memberId . '&reservation_id=' . $reservationId . '" class="btn btn-success">Cash</a>';
+                 echo '<a href="posCardPayment.php?bill_id=' . $bill_id . '&staff_id=' . $staffId . '&member_id=' . $memberId . '&reservation_id=' . $reservationId . '" class="btn btn-primary ml-2">Credit Card</a>';
+                 echo '<a href="posQrPayment.php?bill_id=' . $bill_id . '&staff_id=' . $staffId . '&member_id=' . $memberId . '&reservation_id=' . $reservationId . '" class="btn btn-info ml-2">QR Code</a>';
+                 echo '</div>';
+             } else {
+                 echo "Invalid staff, member, or reservation.";
+             }
         }
     }
     ?>

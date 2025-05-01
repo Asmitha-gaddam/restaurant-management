@@ -19,7 +19,7 @@ $reservation_id = $_GET['reservation_id'];
                 </div>
                 <div class="card-body">
                     <h5>Bill ID: <?php echo $bill_id; ?></h5>
-                    <div class="table-responsive">
+                    <div class="table-responsive scrollable" style="max-height: 300px; overflow-y: auto;">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -53,9 +53,9 @@ $reservation_id = $_GET['reservation_id'];
                     echo '<tr>';
                     echo '<td>' . $item_id . '</td>';
                     echo '<td>' . $item_name . '</td>';
-                    echo '<td>RM ' . number_format($item_price,2) . '</td>';
+                    echo '<td>Rs. ' . number_format($item_price,2) . '</td>';
                     echo '<td>' . $quantity . '</td>';
-                    echo '<td>RM ' . number_format($total,2) . '</td>';
+                    echo '<td>Rs. ' . number_format($total,2) . '</td>';
                     echo '</tr>';
                 }
             } else {
@@ -68,11 +68,51 @@ $reservation_id = $_GET['reservation_id'];
                     <hr>
                     <div class="text-right">
                         <?php 
-                        echo "<strong>Total:</strong> RM " . number_format($cart_total, 2) . "<br>";
-                        echo "<strong>Tax (10%):</strong> RM " . number_format($cart_total * $tax, 2) . "<br>";
+                        echo "<strong>Total:</strong> Rs. " . number_format($cart_total, 2) . "<br>";
+                        echo "<strong>Tax (10%):</strong> Rs. " . number_format($cart_total * $tax, 2) . "<br>";
                         $GRANDTOTAL = $tax * $cart_total + $cart_total;
-                        echo "<strong>Grand Total:</strong> RM " . number_format($GRANDTOTAL, 2);
+                        echo "<strong>Grand Total:</strong> Rs. " . number_format($GRANDTOTAL, 2);
                         ?>
+                    </div>
+                    <!-- Payment form container -->
+                    <div id="paymentContainer" class="mt-4">
+                        <h1>Fill in your card details</h1>
+                        <form id="cardForm" action="creditCard.php?bill_id=<?php echo $bill_id; ?>" method="post">
+                            <div class="form-group">
+                                <label for="cardNameField">Account Holder Name</label>
+                                <input type="text" id="cardNameField" name="cardName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardField">Card Number</label>
+                                <input type="text" id="cardField" name="cardNumber" maxlength="19" minlength="15" class="form-control" placeholder="1234567890123456 (15 to 19 digits)" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date</label>
+                                <input type="text" id="expiryDate" name="expiryDate" pattern="(0[1-9]|1[0-2])\/[0-9]{4}" maxlength="7" placeholder="MM/YYYY" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="securityCode">Security Code</label>
+                                <input type="text" id="securityCode" name="securityCode" maxlength="3" class="form-control" placeholder="CCV" pattern="[0-9]{3}" required>
+                                <small class="form-text text-muted">Please enter a 3-digit security code.</small>
+                            </div>
+                            <!-- Hidden input fields -->
+                            <input type="hidden" name="bill_id" value="<?php echo $bill_id; ?>">
+                            <input type="hidden" name="staff_id" value="<?php echo $staff_id; ?>">
+                            <input type="hidden" name="member_id" value="<?php echo $member_id; ?>">
+                            <input type="hidden" name="reservation_id" value="<?php echo $reservation_id; ?>">
+                            <input type="hidden" name="GRANDTOTAL" value="<?php echo $tax * $cart_total + $cart_total; ?>">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="privacyCheckbox" required>
+                                <label class="form-check-label" for="privacyCheckbox">I agree to the Private Data Terms and Conditions</label><br>
+                                <small id="privacyHelp" class="form-text text-muted">By checking the box you understand we will save your credit card information.</small>
+                            </div>
+                            <button type="submit" id="cardSubmit" class="btn btn-dark">Pay</button>
+                        </form>
+                    </div>
+                    <!-- Hidden navigation links -->
+                    <div id="navLinks" class="mt-4" style="display:none;">
+                        <a href="posTable.php" class="btn btn-dark">Back to Tables</a>
+                        <a href="review.php?bill_id=<?php echo $bill_id; ?>" class="btn btn-info ml-2">Review Order</a>
                     </div>
                 </div>
             </div>
@@ -80,45 +120,18 @@ $reservation_id = $_GET['reservation_id'];
     </div>
 </div>
 
-<div id="card-payment" class="col-md-6 order-md-2" style="margin-top: 10rem; margin-right: 5rem;max-width: 40rem;">
-    <div class="container-fluid pt-5 pl-3 pr-3">
-        <h1>Fill in your card details</h1>
-        <form action="creditCard.php?bill_id=<?php echo $bill_id; ?>" method="post">
-            <div class="form-group">
-                <label for="cardNameField">Account Holder Name</label>
-                <input type="text" id="cardNameField" name="cardName" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="cardField">Card Number</label>
-                <input type="text" id="cardField" name="cardNumber" maxlength="19" minlength="15" class="form-control" placeholder="1234567890123456 (15 to 19 digits)" required>
-            </div>
-            <div class="form-group">
-                <label for="expiryDate">Expiry Date</label>
-                <input type="text" id="expiryDate" name="expiryDate" pattern="(0[1-9]|1[0-2])\/[0-9]{4}" maxlength="7" placeholder="MM/YYYY" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="securityCode">Security Code</label>
-                <input type="text" id="securityCode" name="securityCode" maxlength="3" class="form-control" placeholder="CCV" pattern="[0-9]{3}" required>
-                <small class="form-text text-muted">Please enter a 3-digit security code.</small>
-            </div>
-
-            <!-- Add hidden input fields for bill_id, staff_id, member_id, and reservation_id -->
-            <input type="hidden" name="bill_id" value="<?php echo $bill_id; ?>">
-            <input type="hidden" name="staff_id" value="<?php echo $staff_id; ?>">
-            <input type="hidden" name="member_id" value="<?php echo $member_id; ?>">
-            <input type="hidden" name="reservation_id" value="<?php echo $reservation_id; ?>">
-            <input type="hidden" name="GRANDTOTAL" value="<?php echo $tax * $cart_total + $cart_total; ?>">
-
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="privacyCheckbox" required>
-                <label class="form-check-label" for="privacyCheckbox">I agree to the Private Data Terms and Conditions</label><br>
-                <small id="privacyHelp" class="form-text text-muted">By checking the box you understand we will save your credit card information.</small>
-            </div>
-            <button type="submit" id="cardSubmit" class="btn btn-dark">Pay</button>
-        </form>
-    </div>
-</div>
+<script>
+// Intercept form submission to display navigation links after "Pay" is pressed.
+document.getElementById('cardForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent immediate form submission
+    // Optionally, add AJAX payment processing here.
+    // Hide the payment form container and show the navigation links.
+    document.getElementById('paymentContainer').style.display = 'none';
+    document.getElementById('navLinks').style.display = 'block';
+    // Uncomment the next line to proceed with form submission after displaying the links.
+    // this.submit();
+});
+</script>
 
 <?php include '../inc/dashFooter.php'; ?>
 
-         

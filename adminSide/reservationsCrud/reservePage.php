@@ -798,7 +798,7 @@ $sides = mysqli_fetch_all($resultsides, MYSQLI_ASSOC);
                 }
             });
         }
-        const url = new URL("http://localhost/restaurant-management/customerSide/CustomerReservation/reservePage.php");
+        const url = new URL("http://localhost/restaurant-management/adminSide/panel/reservation-panel.php");
         url.searchParams.set("process_reservation", "1");
         url.searchParams.set("customer_name", customerName);
         url.searchParams.set("head_count", guestCount);

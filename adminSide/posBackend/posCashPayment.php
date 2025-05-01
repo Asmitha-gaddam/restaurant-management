@@ -151,7 +151,8 @@ $reservation_id = $_GET['reservation_id'];
                             Bill successfully Paid!
                           </div>';
                     echo '<a href="posTable.php" class="btn btn-dark ">Back to Tables</a>';
-                    echo '<a href="receipt.php?bill_id=' . $bill_id . '" class="btn btn-light">Print Receipt <span class="fa fa-receipt text-black"></span></a>';
+                    echo '<a href="review.php?bill_id=' . $bill_id . '" class="btn btn-info ml-2">Review Order</a>';
+                    echo '<a href="receipt.php?bill_id=' . $bill_id . '" class="btn btn-light ml-2">Print Receipt <span class="fa fa-receipt text-black"></span></a>';
                 } else {
                     echo "Error updating bill: " . $link->error;
                 }

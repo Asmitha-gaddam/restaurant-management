@@ -52,10 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_payment'])) {
     <?php if ($paid): ?>
         <div class="alert alert-success">QR Payment successful.</div>
         <a href="posTable.php" class="btn btn-dark">Back to Tables</a>
+        <a href="review.php?bill_id=<?= $bill_id ?>" class="btn btn-info ml-2">Review Order</a>
         <a href="receipt.php?bill_id=<?= $bill_id ?>" class="btn btn-light">Print Receipt</a>
     <?php elseif (!empty($message)): ?>
         <div class="alert alert-warning"><?= $message ?></div>
         <a href="posTable.php" class="btn btn-dark">Back to Tables</a>
+        <a href="review.php?bill_id=<?= $bill_id ?>" class="btn btn-info ml-2">Review Order</a>
     <?php else: ?>
         <div class="text-center mb-4">
             <p>Please scan the QR code to complete payment of <strong>Rs. <?= number_format($GRANDTOTAL, 2) ?></strong></p>
